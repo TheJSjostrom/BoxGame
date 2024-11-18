@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BoxGame", "BoxGame\BoxGame.vcxproj", "{723B4870-EEBC-4A74-B81C-1820C2D47773}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Dist|x64 = Dist|x64
+		Dist|x86 = Dist|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Debug|x64.ActiveCfg = Debug|x64
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Debug|x64.Build.0 = Debug|x64
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Debug|x86.ActiveCfg = Debug|Win32
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Debug|x86.Build.0 = Debug|Win32
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Dist|x64.ActiveCfg = Debug|x64
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Dist|x64.Build.0 = Debug|x64
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Dist|x86.ActiveCfg = Debug|Win32
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Dist|x86.Build.0 = Debug|Win32
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Release|x64.ActiveCfg = Release|x64
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Release|x64.Build.0 = Release|x64
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Release|x86.ActiveCfg = Release|Win32
+		{723B4870-EEBC-4A74-B81C-1820C2D47773}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88B9F953-03C4-4D35-9F55-6C43B7EC5EF2}
+	EndGlobalSection
+EndGlobal
