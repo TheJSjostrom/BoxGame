@@ -22,15 +22,14 @@ namespace BoxGame {
 		m_EndCamDir = { 0.0f, 0.0f, 0.0f };	
 
 	
-		m_Image = LoadImage("skybox\back.jpg");
+		m_Image = LoadImage("assets\skybox\back.jpg");
 		m_Texture = LoadTextureFromImage(m_Image);
 	}
 
 	void Game::OnUpdate(float ts)
 	{
-		//UpdateCamera(&m_Camera.GetCamera(), m_Camera.GetCamera().projection);
-		float x = cos(Radians(-90.0f));
-		
+		//UpdateCamera(&m_Camera.GetCamera(), m_Camera.GetCamera().projection);	
+
 		float MouseXPos = (float)GetMouseX();
 		float MouseYPos = (float)GetMouseY();
 
@@ -61,6 +60,12 @@ namespace BoxGame {
 		CameraDir.z = sin(Radians(m_Yaw)) * cos(Radians(m_Pitch));
 		Vector3 CameraDirectionNor = Vector3Normalize(CameraDir);
 
+		Vector3 FrontDir;
+		FrontDir.x = cos(Radians(m_Yaw));
+		FrontDir.y = 0.0f;
+		FrontDir.z = sin(Radians(m_Yaw));
+		Vector3 LeftSideDir = Vector3CrossProduct({ 0.0f, 1.0f, 0.0f }, FrontDir);
+
 		if (IsKeyDown(KEY_W))
 		{
 			m_Position.x += CameraDirectionNor.x * m_PositionSpeed * ts;
@@ -75,24 +80,15 @@ namespace BoxGame {
 		}
 		if (IsKeyDown(KEY_D))
 		{
-			Vector3 RightCameraDir;
-			RightCameraDir.x = cos(Radians(m_Yaw + 90.0f)) * 12;
-			RightCameraDir.y = 0.0f;
-			RightCameraDir.z = sin(Radians(m_Yaw + 90.0f)) * 12;
-			std::cout << Vector3Length(RightCameraDir) << std::endl;
-			m_Position.x += RightCameraDir.x * m_PositionSpeed * ts;
-			m_Position.z += RightCameraDir.z * m_PositionSpeed * ts;
+			m_Position.x -= LeftSideDir.x * m_PositionSpeed * ts;
+			m_Position.z -= LeftSideDir.z * m_PositionSpeed * ts;
 		}
 		if (IsKeyDown(KEY_A))
 		{
-			Vector3 LeftCameraDir;
-			LeftCameraDir.x = cos(Radians(m_Yaw + 90.0f));
-			LeftCameraDir.y = 0.0f;
-			LeftCameraDir.z = sin(Radians(m_Yaw + 90.0f));
-
-			m_Position.x -= LeftCameraDir.x * m_PositionSpeed * ts;
-			m_Position.z -= LeftCameraDir.z * m_PositionSpeed * ts;
+			m_Position.x += LeftSideDir.x * m_PositionSpeed * ts;
+			m_Position.z += LeftSideDir.z * m_PositionSpeed * ts;
 		}
+
 		if (IsKeyDown(KEY_LEFT_SHIFT))
 		{
 			m_PositionSpeed = 50.0f;
