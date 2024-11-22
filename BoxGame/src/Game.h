@@ -20,10 +20,10 @@ namespace BoxGame {
 		float m_LastMouseX = 640.0f;
 		float m_LastMouseY = 0.0f;
 		float m_Fov = 45.0f;
-		float m_PositionSpeed = 5.0f;
+		float m_CameraSpeed = 5.0f;
 
-		Texture2D m_Texture;
-		Image m_Image;
+		
+		Vector3 m_FrontDirection;
 		Vector3 m_Target = { 0.0f, 0.0f, 0.0f };
 		Vector3 m_Position = { 0.0f, 0.5f, 0.0f };
 	

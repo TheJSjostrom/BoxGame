@@ -7,8 +7,6 @@ namespace BoxGame {
 	Application::Application() 
 	{
 		m_Game = std::make_unique<Game>();
-		DisableCursor();
-	
 	}
 
 	Application::~Application()
