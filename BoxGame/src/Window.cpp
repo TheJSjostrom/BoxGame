@@ -24,7 +24,6 @@ namespace BoxGame {
 		{
 			std::cout << "Window couldn't initialize successfully" << std::endl;
 		}
-
 	}
 
 	void Window::Shutdown()

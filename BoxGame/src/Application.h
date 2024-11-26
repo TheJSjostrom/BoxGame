@@ -15,7 +15,10 @@ namespace BoxGame {
 		~Application();
 
 		void Run();
-
+	
+		const Window& GetWindow() const { return m_Window; }
+	public:
+		static Application& Get();
 	private:
 		void OnUpdate(float ts);
 		void OnRender();

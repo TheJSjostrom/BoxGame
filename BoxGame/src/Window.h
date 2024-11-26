@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 namespace BoxGame {
 
 	struct WindowData
@@ -21,8 +20,9 @@ namespace BoxGame {
 		void OnUpdate();
 		bool IsWindowClosed();
 
-		int GetWidth() { return m_Data.Width; }
-		int GetHeight() { return m_Data.Height; }
+		int GetWidth() const { return m_Data.Width; }
+		int GetHeight() const { return m_Data.Height; }
+		const WindowData& GetWindowData() const { return m_Data; }
 	private:
 		void Init();
 		void Shutdown();

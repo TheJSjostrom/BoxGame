@@ -1,17 +1,26 @@
 #include <iostream>
 #include "src/Application.h"
 #include "raylib.h"
+#include <string>
 
 namespace BoxGame {
 
+	static Application* s_Instance = nullptr;
+
 	Application::Application() 
 	{
-		m_Game = std::make_unique<Game>();
+		s_Instance = this;
+		m_Game = std::make_unique<Game>(); 
 	}
 
 	Application::~Application()
 	{
+		s_Instance = nullptr;
+	}
 
+	Application& Application::Get()
+	{
+		return *s_Instance;
 	}
 
 	void Application::Run()
@@ -24,8 +33,11 @@ namespace BoxGame {
 			m_LastFrameTime = time;
 
 			if (m_Window.IsWindowClosed())
+			{
 				m_Running = false;
-			
+				break;
+			}
+ 
 			OnUpdate(timestep);
 			OnRender();
 			m_Window.OnUpdate();
@@ -41,8 +53,9 @@ namespace BoxGame {
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-		DrawFPS(0, 0);
 		m_Game->OnRender();
+		DrawText(m_Window.GetWindowData().Title.c_str(), 500, 0, 50, GRAY);
+		DrawFPS(0, 0);
 		EndDrawing();
 	}
 
