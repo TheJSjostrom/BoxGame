@@ -15,14 +15,12 @@ namespace BoxGame {
 		~Application();
 
 		void Run();
-	
-		const Window& GetWindow() const { return m_Window; }
 	public:
 		static Application& Get();
+		static const Window& GetWindow();
 	private:
 		void OnUpdate(float ts);
 		void OnRender();
-
 	private:
 		Window m_Window;
 		std::unique_ptr<Game> m_Game;

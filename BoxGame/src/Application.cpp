@@ -22,7 +22,10 @@ namespace BoxGame {
 	{
 		return *s_Instance;
 	}
-
+	const Window& Application::GetWindow()
+	{
+		return Get().m_Window;
+	}
 	void Application::Run()
 	{
 		// Application loop
@@ -33,10 +36,7 @@ namespace BoxGame {
 			m_LastFrameTime = time;
 
 			if (m_Window.IsWindowClosed())
-			{
 				m_Running = false;
-				break;
-			}
  
 			OnUpdate(timestep);
 			OnRender();
@@ -54,8 +54,8 @@ namespace BoxGame {
 		BeginDrawing();
 		ClearBackground(BLACK);
 		m_Game->OnRender();
-		DrawText(m_Window.GetWindowData().Title.c_str(), 500, 0, 50, GRAY);
-		DrawFPS(0, 0);
+		DrawText(m_Window.GetName().c_str(), 500, 0, 50, GRAY);
+		DrawFPS(10, 10);
 		EndDrawing();
 	}
 

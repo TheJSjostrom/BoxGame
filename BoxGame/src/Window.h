@@ -22,6 +22,8 @@ namespace BoxGame {
 
 		int GetWidth() const { return m_Data.Width; }
 		int GetHeight() const { return m_Data.Height; }
+
+		const std::string& GetName() const { return m_Data.Title; }
 		const WindowData& GetWindowData() const { return m_Data; }
 	private:
 		void Init();
