@@ -6,3 +6,6 @@ bin-int/
 # Files
 desktop.ini
 *.user
+*.sln
+*.vcxproj.filters
+*.vcxproj

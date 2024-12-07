@@ -4,7 +4,7 @@
 #include "src/Game.h"
 #include <memory>
 #include "raylib.h"
-#include "Camera.h"
+#include "src/Camera.h"
 
 namespace BoxGame {
 

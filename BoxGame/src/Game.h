@@ -1,7 +1,7 @@
 #pragma once
-#include "Camera.h"
-#include "Player.h"
-#include "Level.h"
+#include "src/Camera.h"
+#include "src/Player.h"
+#include "src/Level.h"
 
 namespace BoxGame {
 

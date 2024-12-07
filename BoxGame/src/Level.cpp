@@ -1,4 +1,4 @@
-#include "Level.h"
+#include "src/Level.h"
 #include "rlgl.h"
 
 namespace BoxGame
@@ -37,7 +37,7 @@ namespace BoxGame
 			{ 0.0f,  m_Texture.height / 2.0f,  m_Texture.width / 2.0f,  m_Texture.height / 2.0f },
 			{ 1.0f, 0.5f, 0.0f }, 1.0f, 1.0f, 1.0f, WHITE);
 
-		DrawGrid(100.0f, 1.0f);
+		DrawGrid(100, 1.0f);
 	}
 
     void Level::DrawCubeTextureRec(Texture2D texture, Rectangle source, Vector3 position, float width, float height, float length, Color color)
