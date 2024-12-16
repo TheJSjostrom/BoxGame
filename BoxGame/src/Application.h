@@ -1,11 +1,13 @@
 #pragma once
+#include <memory>
 
+#include "src/Renderer.h"
 #include "src/Window.h"
 #include "src/Game.h"
-#include <memory>
-#include "raylib.h"
 #include "src/Camera.h"
 
+#include "raylib.h"
+ 
 namespace BoxGame {
 
 	class Application
@@ -15,14 +17,19 @@ namespace BoxGame {
 		~Application();
 
 		void Run();
+
 	public:
 		static Application& Get();
-		static const Window& GetWindow();
+		static Window& GetWindow();
+		static Renderer& GetRenderer();
+
 	private:
 		void OnUpdate(float ts);
 		void OnRender();
+
 	private:
 		Window m_Window;
+		Renderer m_Renderer;
 		std::unique_ptr<Game> m_Game;
 
 		bool m_Running = true;

@@ -1,6 +1,6 @@
 #include "src/Application.h"
 
-static void CreateAndRunApp()
+static void RunApp()
 {
 	BoxGame::Application app;
 	app.Run();
@@ -8,5 +8,5 @@ static void CreateAndRunApp()
 
 int main()
 {
-	CreateAndRunApp();
+	RunApp();
 }

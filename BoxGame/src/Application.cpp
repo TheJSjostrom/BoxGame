@@ -1,7 +1,10 @@
 #include <iostream>
-#include "src/Application.h"
-#include "raylib.h"
 #include <string>
+
+#include "src/Application.h"
+
+#include "raylib.h"
+ 
 
 namespace BoxGame {
 
@@ -22,10 +25,17 @@ namespace BoxGame {
 	{
 		return *s_Instance;
 	}
-	const Window& Application::GetWindow()
+
+	Window& Application::GetWindow()
 	{
 		return Get().m_Window;
 	}
+
+	 Renderer& Application::GetRenderer()
+	{
+		return Get().m_Renderer;
+	}
+
 	void Application::Run()
 	{
 		// Application loop
@@ -53,8 +63,7 @@ namespace BoxGame {
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-		m_Game->OnRender();
-		DrawText(m_Window.GetName().c_str(), 500, 0, 50, GRAY);
+		m_Game->OnRender();	 
 		DrawFPS(10, 10);
 		EndDrawing();
 	}

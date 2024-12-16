@@ -1,6 +1,9 @@
-#include "src/Player.h"
-#include "raymath.h"
+#include <iostream>
 
+#include "src/Player.h"
+
+#include "raymath.h"
+ 
 namespace BoxGame {
 
 	static float radians(float degrees)
@@ -8,40 +11,52 @@ namespace BoxGame {
 		return degrees * (PI / 180);
 	}
 
+	void Player::Init()
+	{
+		m_Model = LoadModel("./res/cat.glb");
+	}
+
 	void Player::OnUpdate(float ts)
 	{
-	
-		m_Jump = true;
-		
+		m_Model.transform = MatrixRotateY(radians(m_Angle + 90.0f));
 
-		if (m_Jump)
+		Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
+		Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
+
+		if (IsKeyDown(KEY_RIGHT))
 		{
-			m_JumpTimer += 1;
-
-			if (m_JumpTimer < 80)
-			{
-				m_Position.y += 2 * ts;
-			}
-			else
-			{
-				m_Position.y -= 2 * ts;
-			}
+			m_Angle -= 180.0f * ts;
+		}
+		if (IsKeyDown(KEY_LEFT))
+		{
+			m_Angle += 180.0f * ts;
 		}
 
-		if (m_JumpTimer >= 160)
+		if (IsKeyDown(KEY_UP))
 		{
-			m_JumpTimer = 0;
-			m_Jump = false;
-			m_Position.y = 0.25f;
+			m_Position.x += m_FrontDirection.x * 5.0f * ts;
+			m_Position.z += m_FrontDirection.z * 5.0f * ts;
 		}
+		if (IsKeyDown(KEY_DOWN))
+		{
+			m_Position.x -= m_FrontDirection.x * 5.0f * ts;
+			m_Position.z -= m_FrontDirection.z * 5.0f * ts;
+		}
+
+		m_FrontDirection.x += cos(radians(-m_Angle)) * 1;
+		m_FrontDirection.y += 0.0f;
+		m_FrontDirection.z += sin(radians(-m_Angle)) * 1;
+		m_FrontDirection = Vector3Normalize(m_FrontDirection);
+
+		m_ModelTarget.x = m_Position.x + m_FrontDirection.x;
+		m_ModelTarget.y = m_Position.y + m_FrontDirection.y;
+		m_ModelTarget.z = m_Position.z + m_FrontDirection.z;
 	}
 
 	void Player::OnRender()
 	{
-		DrawSphere({ m_Position.x, m_Position.y + 0.5f, m_Position.z }, 0.25f, BLACK);
-		DrawSphereWires({ m_Position.x,m_Position.y + 0.5f, m_Position.z }, 0.25f, 50, 50, BLUE);
-		DrawCube(m_Position, 0.5f, 0.5f, 0.5f, BLACK);
-		DrawCubeWires(m_Position, 0.503f, 0.503f, 0.503f, BLUE);
+		DrawLine3D({ m_Position.x, 0.0f, m_Position.z }, { m_ModelTarget.x, 0.0f, m_ModelTarget.z}, DARKBLUE);
+		DrawModelWires(m_Model, m_Position, 0.5f, WHITE);
 	}
 
 }

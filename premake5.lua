@@ -24,11 +24,14 @@ project "BoxGame"
         "%{prj.name}/vendor/Raylib/raylib-5.0_win64_msvc16/include" 
     }
 
-    libdirs { "%{prj.name}/vendor/Raylib/raylib-5.0_win64_msvc16/lib" }
+    libdirs 
+    { 
+        "%{prj.name}/vendor/Raylib/raylib-5.0_win64_msvc16/lib" 
+    }
 
     links 
     { 
-        "raylib.lib", 
+        "raylib", 
         "WinMM" 
     }
 
