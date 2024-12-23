@@ -2,6 +2,8 @@
 
 #include "math.h"
 #include "src/Level.h"
+#include "src/Renderer.h"
+#include "src/Application.h"
 
 #include "rlgl.h"
 #include "raymath.h"
@@ -26,11 +28,7 @@ namespace BoxGame
 
 	Level::Level()
 	{
-        m_Player.Init();
-
-        m_Texture = LoadTexture("./res/Checkerboard.png");
-		m_DiffuseTexture = LoadTexture("./res/backpack/diffuse2.png");
-		
+        m_Player.Init();   
 	}
 
 	void Level::OnUpdate(float ts)
@@ -58,6 +56,8 @@ namespace BoxGame
 
 	void Level::OnRender()
 	{
+        Renderer& renderer = Application::GetRenderer();
+        
 		m_Player.OnRender();
 
         DrawLine3D({0.0f, 0.0f, 0.0f}, m_Vec, BLACK);
@@ -68,8 +68,8 @@ namespace BoxGame
         DrawLine3D({ 0.0f, 0.0f, 0.0f }, { m_Vec.x, 0.0f, 0.0f }, DARKBLUE);
 
 		// X line
-	//	DrawRay({ {0.0f, 0.0f, 0.0f},{ 1.0f, 0.0f, 0.0f} }, { 255, 0, 0, 255 });
-	//	DrawRay({ {0.0f, 0.0f, 0.0f},{ -1.0f, 0.0f, 0.0f} }, WHITE);
+		DrawRay({ {0.0f, 0.0f, 0.0f},{ 1.0f, 0.0f, 0.0f} }, { 255, 0, 0, 255 });
+		DrawRay({ {0.0f, 0.0f, 0.0f},{ -1.0f, 0.0f, 0.0f} }, WHITE);
 		// Y line
 		DrawRay({ {0.0f, 0.0f, 0.0f},{ 0.0f, 1.0f, 0.0f} }, { 0, 255, 0, 255 });
 		DrawRay({ {0.0f, 0.0f, 0.0f}, { 0.0f, -1.0f, 0.0f} }, WHITE);
@@ -77,97 +77,17 @@ namespace BoxGame
 		DrawRay({ {0.0f, 0.0f, 0.0f},{ 0.0f, 0.0f, 1.0f} }, { 0, 0, 255, 255 });
 		DrawRay({ {0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, -1.0f} }, WHITE);
 
-		DrawCubeTextureRec(m_Texture,
-			{ 0.0f,  m_Texture.height / 2.0f,  m_Texture.width / 2.0f,  m_Texture.height / 2.0f },
-			m_CubePosition, 3.0f, 3.0f, 1.0f, WHITE);
+        renderer.RenderCube({ 0.0f,  renderer.GetTexture().height / 2.0f,
+                            renderer.GetTexture().width / 2.0f, 
+                            renderer.GetTexture().height / 2.0f },
+                            m_CubePosition, 3.0f, 3.0f, 1.0f, WHITE);
+
+        renderer.RenderCube({ 0.0f,  renderer.GetTexture().height / 2.0f,
+                    renderer.GetTexture().width / 2.0f,
+                    renderer.GetTexture().height / 2.0f },
+            {4.0f, 1.0f, 0.0f }, 3.0f, 3.0f, 3.0f, BLUE);
 
 		DrawGrid(100, 1.0f);
 	}
 
-    void Level::DrawCubeTextureRec(const Texture2D& texture, const Rectangle& source, const Vector3& position, float width, float height, float length, const Color& color)
-    {
-        float x = position.x;
-        float y = position.y;
-        float z = position.z;
-        float texWidth = (float)texture.width;
-        float texHeight = (float)texture.height;
-
-        // Set desired texture to be enabled while drawing following vertex data
-        rlSetTexture(texture.id);
-
-        // We calculate the normalized texture coordinates for the desired texture-source-rectangle
-        // It means converting from (tex.width, tex.height) coordinates to [0.0f, 1.0f] equivalent 
-        rlBegin(RL_QUADS);
-        rlColor4ub(color.r, color.g, color.b, color.a);
-
-        // Front face
-        rlNormal3f(0.0f, 0.0f, 1.0f);
-        rlTexCoord2f(source.x / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x - width / 2, y - height / 2, z + length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x + width / 2, y - height / 2, z + length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, source.y / texHeight);
-        rlVertex3f(x + width / 2, y + height / 2, z + length / 2);
-        rlTexCoord2f(source.x / texWidth, source.y / texHeight);
-        rlVertex3f(x - width / 2, y + height / 2, z + length / 2);
-
-        // Back face
-        rlNormal3f(0.0f, 0.0f, -1.0f);
-        rlTexCoord2f((source.x + source.width) / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x - width / 2, y - height / 2, z - length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, source.y / texHeight);
-        rlVertex3f(x - width / 2, y + height / 2, z - length / 2);
-        rlTexCoord2f(source.x / texWidth, source.y / texHeight);
-        rlVertex3f(x + width / 2, y + height / 2, z - length / 2);
-        rlTexCoord2f(source.x / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x + width / 2, y - height / 2, z - length / 2);
-
-        // Top face
-        rlNormal3f(0.0f, 1.0f, 0.0f);
-        rlTexCoord2f(source.x / texWidth, source.y / texHeight);
-        rlVertex3f(x - width / 2, y + height / 2, z - length / 2);
-        rlTexCoord2f(source.x / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x - width / 2, y + height / 2, z + length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x + width / 2, y + height / 2, z + length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, source.y / texHeight);
-        rlVertex3f(x + width / 2, y + height / 2, z - length / 2);
-
-        // Bottom face
-        rlNormal3f(0.0f, -1.0f, 0.0f);
-        rlTexCoord2f((source.x + source.width) / texWidth, source.y / texHeight);
-        rlVertex3f(x - width / 2, y - height / 2, z - length / 2);
-        rlTexCoord2f(source.x / texWidth, source.y / texHeight);
-        rlVertex3f(x + width / 2, y - height / 2, z - length / 2);
-        rlTexCoord2f(source.x / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x + width / 2, y - height / 2, z + length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x - width / 2, y - height / 2, z + length / 2);
-
-        // Right face
-        rlNormal3f(1.0f, 0.0f, 0.0f);
-        rlTexCoord2f((source.x + source.width) / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x + width / 2, y - height / 2, z - length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, source.y / texHeight);
-        rlVertex3f(x + width / 2, y + height / 2, z - length / 2);
-        rlTexCoord2f(source.x / texWidth, source.y / texHeight);
-        rlVertex3f(x + width / 2, y + height / 2, z + length / 2);
-        rlTexCoord2f(source.x / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x + width / 2, y - height / 2, z + length / 2);
-
-        // Left face
-        rlNormal3f(-1.0f, 0.0f, 0.0f);
-        rlTexCoord2f(source.x / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x - width / 2, y - height / 2, z - length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, (source.y + source.height) / texHeight);
-        rlVertex3f(x - width / 2, y - height / 2, z + length / 2);
-        rlTexCoord2f((source.x + source.width) / texWidth, source.y / texHeight);
-        rlVertex3f(x - width / 2, y + height / 2, z + length / 2);
-        rlTexCoord2f(source.x / texWidth, source.y / texHeight);
-        rlVertex3f(x - width / 2, y + height / 2, z - length / 2);
-
-        rlEnd();
-
-        rlSetTexture(0);
-    }
 }

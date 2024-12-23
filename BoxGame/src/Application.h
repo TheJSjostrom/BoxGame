@@ -30,6 +30,7 @@ namespace BoxGame {
 	private:
 		Window m_Window;
 		Renderer m_Renderer;
+
 		std::unique_ptr<Game> m_Game;
 
 		bool m_Running = true;

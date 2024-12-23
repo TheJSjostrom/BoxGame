@@ -31,7 +31,7 @@ namespace BoxGame {
 		return Get().m_Window;
 	}
 
-	 Renderer& Application::GetRenderer()
+	Renderer& Application::GetRenderer()
 	{
 		return Get().m_Renderer;
 	}
@@ -47,7 +47,7 @@ namespace BoxGame {
 
 			if (m_Window.IsWindowClosed())
 				m_Running = false;
- 
+
 			OnUpdate(timestep);
 			OnRender();
 			m_Window.OnUpdate();

@@ -18,7 +18,8 @@ namespace BoxGame {
 
 	void Player::OnUpdate(float ts)
 	{
-		m_Model.transform = MatrixRotateY(radians(m_Angle + 90.0f));
+		float ModelRotationAngle = m_Angle + 90.0f;
+		m_Model.transform = MatrixRotateY(radians(ModelRotationAngle));
 
 		Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
 		Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
@@ -43,9 +44,9 @@ namespace BoxGame {
 			m_Position.z -= m_FrontDirection.z * 5.0f * ts;
 		}
 
-		m_FrontDirection.x += cos(radians(-m_Angle)) * 1;
+		m_FrontDirection.x += cos(radians(m_Angle));
 		m_FrontDirection.y += 0.0f;
-		m_FrontDirection.z += sin(radians(-m_Angle)) * 1;
+		m_FrontDirection.z += -sin(radians(m_Angle));
 		m_FrontDirection = Vector3Normalize(m_FrontDirection);
 
 		m_ModelTarget.x = m_Position.x + m_FrontDirection.x;

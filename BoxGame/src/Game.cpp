@@ -17,18 +17,18 @@ namespace BoxGame {
 	void Game::OnUpdate(float ts)
 	{
 		m_Camera.OnUpdate(ts);
-        m_Level.OnUpdate(ts);
+		m_Level.OnUpdate(ts);
 	}
 
 	void Game::OnRender()
 	{
-		Renderer& renderer = Application::Get().GetRenderer();
-		Window& window = Application::Get().GetWindow();
+		const Renderer& renderer = Application::GetRenderer();
+		const Window& window = Application::GetWindow();
 		renderer.RenderText(window.GetName(), 500, 0, 50, GRAY);
-		
-        BeginMode3D(m_Camera.GetCamera());
-        m_Level.OnRender();
-        EndMode3D();
+	
+		BeginMode3D(m_Camera.GetCamera());
+		m_Level.OnRender();
+		EndMode3D();
 	}
 
 }
