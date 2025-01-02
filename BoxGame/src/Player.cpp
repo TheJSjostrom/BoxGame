@@ -18,19 +18,18 @@ namespace BoxGame {
 
 	void Player::OnUpdate(float ts)
 	{
-		float ModelRotationAngle = m_Angle + 90.0f;
 		m_Model.transform = MatrixRotateY(radians(ModelRotationAngle));
 
-		Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
-		Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
-
+		// Change ModelAngle and FrontVectorAngle
 		if (IsKeyDown(KEY_RIGHT))
 		{
-			m_Angle -= 180.0f * ts;
+			m_FrontDirectionAngle += 180.0f * ts;
+			ModelRotationAngle -= 180.0f * ts;
 		}
 		if (IsKeyDown(KEY_LEFT))
 		{
-			m_Angle += 180.0f * ts;
+			m_FrontDirectionAngle -= 180.0f * ts;
+			ModelRotationAngle += 180.0f * ts;
 		}
 
 		if (IsKeyDown(KEY_UP))
@@ -44,9 +43,9 @@ namespace BoxGame {
 			m_Position.z -= m_FrontDirection.z * 5.0f * ts;
 		}
 
-		m_FrontDirection.x += cos(radians(m_Angle));
-		m_FrontDirection.y += 0.0f;
-		m_FrontDirection.z += -sin(radians(m_Angle));
+		m_FrontDirection.x = cos(radians(m_FrontDirectionAngle));
+		m_FrontDirection.y = 0.0f;
+		m_FrontDirection.z = sin(radians(m_FrontDirectionAngle));
 		m_FrontDirection = Vector3Normalize(m_FrontDirection);
 
 		m_ModelTarget.x = m_Position.x + m_FrontDirection.x;
@@ -57,7 +56,7 @@ namespace BoxGame {
 	void Player::OnRender()
 	{
 		DrawLine3D({ m_Position.x, 0.0f, m_Position.z }, { m_ModelTarget.x, 0.0f, m_ModelTarget.z}, DARKBLUE);
-		DrawModelWires(m_Model, m_Position, 0.5f, WHITE);
+		DrawModelWires(m_Model, m_Position, 0.25f, WHITE);
 	}
 
 }

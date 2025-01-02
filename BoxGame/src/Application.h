@@ -1,13 +1,13 @@
 #pragma once
 #include <memory>
 
+#include "raylib.h"
+
 #include "src/Renderer.h"
 #include "src/Window.h"
 #include "src/Game.h"
 #include "src/Camera.h"
 
-#include "raylib.h"
- 
 namespace BoxGame {
 
 	class Application
@@ -19,9 +19,9 @@ namespace BoxGame {
 		void Run();
 
 	public:
-		static Application& Get();
-		static Window& GetWindow();
-		static Renderer& GetRenderer();
+		static const Application& Get();
+		static const Window& GetWindow();
+		static const Renderer& GetRenderer();
 
 	private:
 		void OnUpdate(float ts);

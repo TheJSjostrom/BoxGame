@@ -1,10 +1,9 @@
 #include <iostream>
 #include <string>
 
-#include "src/Application.h"
-
 #include "raylib.h"
- 
+
+#include "src/Application.h"
 
 namespace BoxGame {
 
@@ -21,17 +20,17 @@ namespace BoxGame {
 		s_Instance = nullptr;
 	}
 
-	Application& Application::Get()
+	const Application& Application::Get()
 	{
 		return *s_Instance;
 	}
 
-	Window& Application::GetWindow()
+	const Window& Application::GetWindow()
 	{
 		return Get().m_Window;
 	}
 
-	Renderer& Application::GetRenderer()
+	const Renderer& Application::GetRenderer()
 	{
 		return Get().m_Renderer;
 	}
@@ -63,7 +62,8 @@ namespace BoxGame {
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-		m_Game->OnRender();	 
+		m_Game->OnRender();
+		m_Game->OnRenderUI();
 		DrawFPS(10, 10);
 		EndDrawing();
 	}

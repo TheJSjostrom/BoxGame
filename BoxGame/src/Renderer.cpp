@@ -1,6 +1,7 @@
-#include "src/Renderer.h"
 #include "raylib.h"
 #include "rlgl.h"
+
+#include "src/Renderer.h"
 
 namespace BoxGame {
 
@@ -18,7 +19,6 @@ namespace BoxGame {
 	{
 		DrawText(text.c_str(), xPos, yPos, fontSize, color);
 	}
-
 
 	void Renderer::RenderCube(const Rectangle& source, const Vector3& position, float width, float height, float length, const Color& color) const
 	{
@@ -106,4 +106,9 @@ namespace BoxGame {
 
         rlSetTexture(0);
 	}
+
+    void Renderer::RenderRectangle(int x, int y, int width, int height, const Color& color) const
+    {
+        DrawRectangle(x, y, width, height, color);
+    }
 }

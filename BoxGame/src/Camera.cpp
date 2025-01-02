@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "src/Camera.h"
- 
+
 #include "raymath.h"
 
 namespace BoxGame {
@@ -33,7 +33,7 @@ namespace BoxGame {
 
 	void Camera::OnUpdate(float ts)
 	{
-		Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
+		const Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
 		Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
 
 		Vector2 MousePosition = GetMousePosition();

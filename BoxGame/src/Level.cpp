@@ -35,37 +35,32 @@ namespace BoxGame
 	{
 		m_Player.OnUpdate(ts);
 
-        if (IsKeyDown(KEY_Z))
+        const Vector3 LeftDirection = { 0.0f, 0.0f, 1.0f };
+        m_UpDirection = Vector3Normalize(Vector3CrossProduct(LeftDirection, m_Vector));
+        
+        if (IsKeyDown(KEY_KP_4))
         {
-            m_Angle += 180.0f * ts;
+            m_VectorAngle += 180.0f * ts;
         }
-       if (IsKeyDown(KEY_X))
+        if (IsKeyDown(KEY_KP_6))
         {
-            m_Angle -= 180.0f * ts;
+            m_VectorAngle -= 180.0f * ts;
         }
 
-        m_Vec.x = cos(radians(m_Angle)) * 1.0f;
-        m_Vec.z = 0.0f;
-        m_Vec.y = sin(radians(m_Angle)) * 1.0f;
-
-        log(m_Angle);
-
-        const Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
-        m_LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_Vec));
+        m_Vector.x = cos(radians(m_VectorAngle));
+        m_Vector.y = sin(radians(m_VectorAngle));
+        m_Vector.z = 0.0f;
+        m_Vector = Vector3Normalize(m_Vector);
 	}
 
 	void Level::OnRender()
 	{
-        Renderer& renderer = Application::GetRenderer();
-        
+        const Renderer& renderer = Application::GetRenderer();
+
+        DrawLine3D({ 0.0f, 0.0f, 0.0f }, m_Vector, YELLOW);
+        DrawLine3D({ 0.0f, 0.0f, 0.0f }, m_UpDirection, RED);
+
 		m_Player.OnRender();
-
-        DrawLine3D({0.0f, 0.0f, 0.0f}, m_Vec, BLACK);
-        DrawLine3D({ 0.0f, 0.0f, 0.0f }, m_LeftDirection, YELLOW);
-
-        // Rendering m_Vec's vector components
-        DrawLine3D({ m_Vec.x, 0.0f, 0.0f }, m_Vec, DARKBLUE);
-        DrawLine3D({ 0.0f, 0.0f, 0.0f }, { m_Vec.x, 0.0f, 0.0f }, DARKBLUE);
 
 		// X line
 		DrawRay({ {0.0f, 0.0f, 0.0f},{ 1.0f, 0.0f, 0.0f} }, { 255, 0, 0, 255 });
@@ -80,12 +75,12 @@ namespace BoxGame
         renderer.RenderCube({ 0.0f,  renderer.GetTexture().height / 2.0f,
                             renderer.GetTexture().width / 2.0f, 
                             renderer.GetTexture().height / 2.0f },
-                            m_CubePosition, 3.0f, 3.0f, 1.0f, WHITE);
+                            m_CubePosition, 6.0f, 6.0f, 2.0f, BLUE);
 
         renderer.RenderCube({ 0.0f,  renderer.GetTexture().height / 2.0f,
                     renderer.GetTexture().width / 2.0f,
                     renderer.GetTexture().height / 2.0f },
-            {4.0f, 1.0f, 0.0f }, 3.0f, 3.0f, 3.0f, BLUE);
+            { 4.0f, 3.0f, 0.0f }, 2.0f, 6.0f, 6.0f, BLUE);
 
 		DrawGrid(100, 1.0f);
 	}

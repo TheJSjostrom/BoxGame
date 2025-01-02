@@ -1,9 +1,9 @@
 #include <iostream>
 
+#include "raylib.h"
+
 #include "src/Window.h"
 #include "src/Application.h"
-
-#include "raylib.h"
 
 namespace BoxGame {
 

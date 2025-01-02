@@ -21,16 +21,16 @@ namespace BoxGame {
 	private:
 		Camera3D m_Camera;
 
+		Vector3 m_FrontDirection = { 0.0f, 0.0f, 1.0f };
+		Vector3 m_Target = { 0.0f, 0.0f, 0.0f };
+		Vector3 m_Position = { -3.0f, 1.0f, 3.0f };
+
 		bool m_FirstFrame = true;
-		float m_Yaw = 0.0f;
+		float m_Yaw = -45.0f;
 		float m_Pitch = 0.0f;
 		float m_LastMouseX = 640.0f;
 		float m_LastMouseY = 0.0f;
 		float m_CameraSpeed = 5.0f;
-
-		Vector3 m_FrontDirection = { 0.0f, 0.0f, -1.0f };
-		Vector3 m_Target = { -1.0f, 0.0f, -2.0f };
-		Vector3 m_Position = { -1.0f, 1.0f, 2.0f };
 	};
 
 }

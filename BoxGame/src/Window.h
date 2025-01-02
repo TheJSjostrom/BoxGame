@@ -25,6 +25,7 @@ namespace BoxGame {
 
 		const std::string& GetName() const { return m_Data.Title; }
 		const WindowData& GetWindowData() const { return m_Data; }
+
 	private:
 		void Init();
 		void Shutdown();

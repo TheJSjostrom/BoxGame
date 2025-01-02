@@ -20,7 +20,8 @@ namespace BoxGame {
 
 		Model m_Model;
 
-		float m_Angle = 0.0f;
+		float ModelRotationAngle = 90.0f;
+		float m_FrontDirectionAngle = 0.0f;
 	};
 
 }
