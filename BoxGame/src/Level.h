@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 
-#include "src/Player.h"
+#include "src/Mesh.h"
 
 namespace BoxGame {
 
@@ -14,11 +14,8 @@ namespace BoxGame {
 		void OnUpdate(float ts);
 		void OnRender();
 
-		const Vector3& GetVector() const { return m_Vector; }
-		const Vector3& GetLeftVector() const { return m_UpDirection; }
-
 	private:
-		Player m_Player;
+		Mesh m_Train;
 		
 		Vector3 m_Vector = { 1.0f, 0.0f, 0.0f };
 		float m_VectorAngle = 45.0f;
@@ -27,6 +24,9 @@ namespace BoxGame {
 		Vector3 m_CubePosition = { 0.0f, 3.0f, -4.0f };
 	
 		float m_Angle = 0.0f;
+
+		Vector3 m_Position = { 0.0f, 0.25f, 0.0f };
+		Vector3 m_Velocity = { 0.0f, 0.0f, 0.0f };
 	};
 
 }

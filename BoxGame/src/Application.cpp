@@ -46,7 +46,7 @@ namespace BoxGame {
 
 			if (m_Window.IsWindowClosed())
 				m_Running = false;
-
+			
 			OnUpdate(timestep);
 			OnRender();
 			m_Window.OnUpdate();
@@ -60,12 +60,13 @@ namespace BoxGame {
 
 	void Application::OnRender()
 	{
-		BeginDrawing();
 		ClearBackground(BLACK);
+
+		BeginDrawing();
 		m_Game->OnRender();
-		m_Game->OnRenderUI();
+		m_Game->OnUIRender();
 		DrawFPS(10, 10);
-		EndDrawing();
+		EndDrawing();	 
 	}
 
 }

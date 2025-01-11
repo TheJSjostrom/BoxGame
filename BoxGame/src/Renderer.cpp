@@ -20,7 +20,22 @@ namespace BoxGame {
 		DrawText(text.c_str(), xPos, yPos, fontSize, color);
 	}
 
-	void Renderer::RenderCube(const Rectangle& source, const Vector3& position, float width, float height, float length, const Color& color) const
+    void Renderer::RenderCube(const Vector3& position, float width, float height, float length, const Color& color) const
+    {
+        DrawCube(position, width, height, length, color);
+    }
+
+    void Renderer::RenderRectangle(int x, int y, int width, int height, const Color& color) const
+    {
+        DrawRectangle(x, y, width, height, color);
+    }
+
+    void Renderer::RenderRay(const Vector3& position, const Vector3& direction, const Color& color) const
+    {
+        DrawRay({ position, direction }, color);
+    }
+
+	void Renderer::RenderTextureCube(const Rectangle& source, const Vector3& position, float width, float height, float length, const Color& color) const
 	{
         float x = position.x;
         float y = position.y;
@@ -107,8 +122,4 @@ namespace BoxGame {
         rlSetTexture(0);
 	}
 
-    void Renderer::RenderRectangle(int x, int y, int width, int height, const Color& color) const
-    {
-        DrawRectangle(x, y, width, height, color);
-    }
 }

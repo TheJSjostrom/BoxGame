@@ -8,8 +8,8 @@
 #include "rlgl.h"
 #include "raymath.h"
 
-namespace BoxGame
-{
+namespace BoxGame {
+
     static void log(const std::string& message)
     {
         std::cout << message << std::endl;
@@ -28,59 +28,80 @@ namespace BoxGame
 
 	Level::Level()
 	{
-        m_Player.Init();   
+		m_Train.Init();   
 	}
 
 	void Level::OnUpdate(float ts)
 	{
-		m_Player.OnUpdate(ts);
+		m_Train.OnUpdate(ts);
 
-        const Vector3 LeftDirection = { 0.0f, 0.0f, 1.0f };
-        m_UpDirection = Vector3Normalize(Vector3CrossProduct(LeftDirection, m_Vector));
-        
-        if (IsKeyDown(KEY_KP_4))
-        {
-            m_VectorAngle += 180.0f * ts;
-        }
-        if (IsKeyDown(KEY_KP_6))
-        {
-            m_VectorAngle -= 180.0f * ts;
-        }
+		Vector3 VectorDir = { 0.0f, 0.0f, 0.0f };
 
-        m_Vector.x = cos(radians(m_VectorAngle));
-        m_Vector.y = sin(radians(m_VectorAngle));
-        m_Vector.z = 0.0f;
-        m_Vector = Vector3Normalize(m_Vector);
+		if (IsKeyDown(KEY_Y))
+		{
+			VectorDir.z = -1.0f;
+		}
+		else if (IsKeyDown(KEY_H))
+		{
+			VectorDir.z = 1.0f;
+		}
+
+		if (IsKeyDown(KEY_G))
+		{
+			VectorDir.x = -1.0f;
+		}
+		else if (IsKeyDown(KEY_J))
+		{
+			VectorDir.x = 1.0f;
+		}
+
+		if (Vector3Length(VectorDir) > 0.0f)
+		{
+			const float speed = 5.0f;
+			VectorDir = Vector3Normalize(VectorDir);
+			m_Velocity.z = VectorDir.z * speed;
+			m_Velocity.x = VectorDir.x * speed;
+		}
+
+		// result = start + amount*(end - start);
+		m_Velocity.x = Lerp(m_Velocity.x, 0.0f, 2.5f * ts);
+		m_Velocity.z = Lerp(m_Velocity.z, 0.0f, 2.5f * ts);
+
+		m_Position.x += m_Velocity.x * ts;
+		m_Position.z += m_Velocity.z * ts;
 	}
 
 	void Level::OnRender()
 	{
         const Renderer& renderer = Application::GetRenderer();
 
-        DrawLine3D({ 0.0f, 0.0f, 0.0f }, m_Vector, YELLOW);
-        DrawLine3D({ 0.0f, 0.0f, 0.0f }, m_UpDirection, RED);
+		m_Train.OnRender();
+		
+		renderer.RenderCube(m_Position, 0.5f, 0.5f, 0.5f, SKYBLUE);
 
-		m_Player.OnRender();
+		DrawLine3D({ 0.0f, 0.0f, 0.0f }, m_Velocity, YELLOW);
 
 		// X line
-		DrawRay({ {0.0f, 0.0f, 0.0f},{ 1.0f, 0.0f, 0.0f} }, { 255, 0, 0, 255 });
-		DrawRay({ {0.0f, 0.0f, 0.0f},{ -1.0f, 0.0f, 0.0f} }, WHITE);
-		// Y line
-		DrawRay({ {0.0f, 0.0f, 0.0f},{ 0.0f, 1.0f, 0.0f} }, { 0, 255, 0, 255 });
-		DrawRay({ {0.0f, 0.0f, 0.0f}, { 0.0f, -1.0f, 0.0f} }, WHITE);
-		// Z line
-		DrawRay({ {0.0f, 0.0f, 0.0f},{ 0.0f, 0.0f, 1.0f} }, { 0, 0, 255, 255 });
-		DrawRay({ {0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, -1.0f} }, WHITE);
+		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 1.0f, 0.0f, 0.0f }), { 255, 0, 0, 255 });
+		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ -1.0f, 0.0f, 0.0f }), WHITE);
 
-        renderer.RenderCube({ 0.0f,  renderer.GetTexture().height / 2.0f,
+		// Y line
+		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 1.0f, 0.0f }), { 0, 255, 0, 255 });
+		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, -1.0f, 0.0f }), WHITE);
+	
+		// Z line
+		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, 1.0f }), { 0, 0, 255, 255 });
+		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, -1.0f }), WHITE);
+
+        renderer.RenderTextureCube({ 0.0f, renderer.GetTexture().height / 2.0f,
                             renderer.GetTexture().width / 2.0f, 
                             renderer.GetTexture().height / 2.0f },
                             m_CubePosition, 6.0f, 6.0f, 2.0f, BLUE);
 
-        renderer.RenderCube({ 0.0f,  renderer.GetTexture().height / 2.0f,
+        renderer.RenderTextureCube({ 0.0f, renderer.GetTexture().height / 2.0f,
                     renderer.GetTexture().width / 2.0f,
                     renderer.GetTexture().height / 2.0f },
-            { 4.0f, 3.0f, 0.0f }, 2.0f, 6.0f, 6.0f, BLUE);
+					{ 4.0f, 3.0f, 0.0f }, 2.0f, 6.0f, 6.0f, BLUE);
 
 		DrawGrid(100, 1.0f);
 	}

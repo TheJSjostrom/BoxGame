@@ -1,6 +1,6 @@
 #pragma once
 #include "src/Camera.h"
-#include "src/Player.h"
+#include "src/Mesh.h"
 #include "src/Level.h"
 #include "src/Renderer.h"
 #include "src/Window.h"
@@ -13,9 +13,9 @@ namespace BoxGame {
 		Game();
 
 		void OnUpdate(float ts);
-		void OnRender();
-		void OnRenderUI();
 
+		void OnRender();
+		void OnUIRender();
 	private:
 		void GameTitle(const Renderer& renderer, const Window& window) const;
 
@@ -24,7 +24,6 @@ namespace BoxGame {
 		Level m_Level;
 
 		int m_Timer = 0;
-		double s = 0.0;
 	};
 
 }

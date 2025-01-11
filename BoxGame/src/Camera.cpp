@@ -34,7 +34,7 @@ namespace BoxGame {
 	void Camera::OnUpdate(float ts)
 	{
 		const Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
-		Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
+		const Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
 
 		Vector2 MousePosition = GetMousePosition();
 		float MousePositionX = MousePosition.x;
@@ -129,5 +129,6 @@ namespace BoxGame {
 		m_Camera.position = m_Position;
 		m_Camera.target = m_Target;
 	}
+
 }
  
