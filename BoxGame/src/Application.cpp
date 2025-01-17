@@ -1,18 +1,14 @@
-#include <iostream>
-#include <string>
-
 #include "raylib.h"
 
 #include "src/Application.h"
-
+#include <iostream>
 namespace BoxGame {
 
-	static Application* s_Instance = nullptr;
+	Application* Application::s_Instance = nullptr;
 
 	Application::Application() 
 	{
 		s_Instance = this;
-		m_Game = std::make_unique<Game>(); 
 	}
 
 	Application::~Application()
@@ -51,11 +47,12 @@ namespace BoxGame {
 			OnRender();
 			m_Window.OnUpdate();
 		}
+		 
 	}
 
 	void Application::OnUpdate(float ts)
 	{
-		m_Game->OnUpdate(ts);
+		m_Game.OnUpdate(ts);
 	}
 
 	void Application::OnRender()
@@ -63,8 +60,8 @@ namespace BoxGame {
 		ClearBackground(BLACK);
 
 		BeginDrawing();
-		m_Game->OnRender();
-		m_Game->OnUIRender();
+		m_Game.OnRender();
+		m_Game.OnUIRender();
 		DrawFPS(10, 10);
 		EndDrawing();	 
 	}

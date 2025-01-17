@@ -16,6 +16,7 @@ namespace BoxGame {
 
 		void OnRender();
 		void OnUIRender();
+
 	private:
 		void GameTitle(const Renderer& renderer, const Window& window) const;
 

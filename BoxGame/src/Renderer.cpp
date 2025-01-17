@@ -20,6 +20,16 @@ namespace BoxGame {
 		DrawText(text.c_str(), xPos, yPos, fontSize, color);
 	}
 
+    void Renderer::RenderIceBlock(const Vector3& position, float width, float height, float length, const Color& color) const
+    {
+        DrawCube(position, width, height, length, color);
+    }
+
+    void Renderer::RenderLine(const Vector3& startPos, const Vector3& endPos, const Color& color) const
+    {
+        DrawLine3D(startPos, endPos, color);
+    }
+
     void Renderer::RenderCube(const Vector3& position, float width, float height, float length, const Color& color) const
     {
         DrawCube(position, width, height, length, color);

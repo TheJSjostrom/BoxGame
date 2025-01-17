@@ -15,8 +15,7 @@ namespace BoxGame {
 		const Camera3D& GetCamera() const { return m_Camera; }
 
 	private:
-		void RecalculateTarget();
-		void RecalculateCamera();
+		void OnUpdateCamera();
 
 	private:
 		Camera3D m_Camera;

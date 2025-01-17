@@ -6,7 +6,6 @@
 #include "src/Renderer.h"
 #include "src/Window.h"
 #include "src/Game.h"
-#include "src/Camera.h"
 
 namespace BoxGame {
 
@@ -31,10 +30,13 @@ namespace BoxGame {
 		Window m_Window;
 		Renderer m_Renderer;
 
-		std::unique_ptr<Game> m_Game;
+		Game m_Game;
 
 		bool m_Running = true;
 		float m_LastFrameTime = 0.0f;
+
+	private:
+		static Application* s_Instance;
 	};
 
 }

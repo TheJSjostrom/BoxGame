@@ -1,11 +1,8 @@
 #include <iostream>
-#include <math.h>
-#include <string>
-
+ 
 #include "src/Game.h"
 #include "src/Application.h"
-
-#include "raymath.h"
+#include <raymath.h>
 #include "raylib.h"
 
 namespace BoxGame {
@@ -37,7 +34,7 @@ namespace BoxGame {
 
 		// Render Game Title
 		if (m_Timer % 120 < 60)
-			GameTitle(renderer, window); 
+			GameTitle(renderer, window);
 	}
 
 	void Game::GameTitle(const Renderer& renderer, const Window& window) const

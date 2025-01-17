@@ -28,47 +28,13 @@ namespace BoxGame {
 
 	Level::Level()
 	{
-		m_Train.Init();   
+		m_Train.Init();
 	}
 
 	void Level::OnUpdate(float ts)
 	{
 		m_Train.OnUpdate(ts);
-
-		Vector3 VectorDir = { 0.0f, 0.0f, 0.0f };
-
-		if (IsKeyDown(KEY_Y))
-		{
-			VectorDir.z = -1.0f;
-		}
-		else if (IsKeyDown(KEY_H))
-		{
-			VectorDir.z = 1.0f;
-		}
-
-		if (IsKeyDown(KEY_G))
-		{
-			VectorDir.x = -1.0f;
-		}
-		else if (IsKeyDown(KEY_J))
-		{
-			VectorDir.x = 1.0f;
-		}
-
-		if (Vector3Length(VectorDir) > 0.0f)
-		{
-			const float speed = 5.0f;
-			VectorDir = Vector3Normalize(VectorDir);
-			m_Velocity.z = VectorDir.z * speed;
-			m_Velocity.x = VectorDir.x * speed;
-		}
-
-		// result = start + amount*(end - start);
-		m_Velocity.x = Lerp(m_Velocity.x, 0.0f, 2.5f * ts);
-		m_Velocity.z = Lerp(m_Velocity.z, 0.0f, 2.5f * ts);
-
-		m_Position.x += m_Velocity.x * ts;
-		m_Position.z += m_Velocity.z * ts;
+		m_IceBlock.OnUpdate(ts);
 	}
 
 	void Level::OnRender()
@@ -76,10 +42,7 @@ namespace BoxGame {
         const Renderer& renderer = Application::GetRenderer();
 
 		m_Train.OnRender();
-		
-		renderer.RenderCube(m_Position, 0.5f, 0.5f, 0.5f, SKYBLUE);
-
-		DrawLine3D({ 0.0f, 0.0f, 0.0f }, m_Velocity, YELLOW);
+		m_IceBlock.OnRender();
 
 		// X line
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 1.0f, 0.0f, 0.0f }), { 255, 0, 0, 255 });

@@ -8,8 +8,8 @@ namespace BoxGame {
 	public:
 		virtual ~Menu() = default;
 
-		virtual void OnUpdate(float ts) { }
-		virtual void OnRender() {}
+		virtual void OnUpdate(float ts) = 0;
+		virtual void OnRender() = 0;
 	};
 
 }
