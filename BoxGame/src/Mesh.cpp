@@ -16,7 +16,7 @@ namespace BoxGame {
 		m_Model = LoadModel("./res/lok.glb");
 	}
 
-	void Mesh::OnUpdate(float ts)
+	void Mesh::OnUpdate(const float ts)
 	{
 		m_Model.transform = MatrixRotateY(radians(ModelRotationAngle));
 		const float speed = 5.0f;

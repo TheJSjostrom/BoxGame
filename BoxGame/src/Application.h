@@ -23,7 +23,7 @@ namespace BoxGame {
 		static const Renderer& GetRenderer();
 
 	private:
-		void OnUpdate(float ts);
+		void OnUpdate(const float ts);
 		void OnRender();
 
 	private:

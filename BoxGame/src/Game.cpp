@@ -12,11 +12,26 @@ namespace BoxGame {
 		DisableCursor();
 	}
 
-	void Game::OnUpdate(float ts)
+	void Game::OnUpdate(const float ts)
 	{
 		m_Timer++;
+	
+		if (IsKeyPressed(KEY_ONE))
+		{
+			DisableCursor();
+			m_CameraMode = true;
+		}
+		else if (IsKeyPressed(KEY_TWO))
+		{
+			DisableCursor();
+			m_CameraMode = false;
+		}
 
-		m_Camera.OnUpdate(ts);
+		if (m_CameraMode)
+		{
+			m_Camera.OnUpdate(ts);
+		}
+
 		m_Level.OnUpdate(ts);
 	}
 
@@ -34,7 +49,9 @@ namespace BoxGame {
 
 		// Render Game Title
 		if (m_Timer % 120 < 60)
+		{
 			GameTitle(renderer, window);
+		}
 	}
 
 	void Game::GameTitle(const Renderer& renderer, const Window& window) const

@@ -10,7 +10,7 @@ namespace BoxGame {
 
 		void Init();
 
-		void OnUpdate(float ts);
+		void OnUpdate(const float ts);
 		void OnRender();
 
 	private:

@@ -9,8 +9,10 @@ namespace BoxGame {
 	{
 	public:
 		Renderer();
-		
+		~Renderer();
+
 		void Init();
+		void Shutdown();
 
 		const Texture2D& GetTexture() const { return m_Texture; }
 

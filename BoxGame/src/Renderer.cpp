@@ -10,9 +10,19 @@ namespace BoxGame {
        Init();
     }
 
+    Renderer::~Renderer()
+    {
+        Shutdown();
+    }
+
     void Renderer::Init()
     {
         m_Texture = LoadTexture("./res/Checkerboard.png");
+    }
+
+    void Renderer::Shutdown()
+    {
+        UnloadTexture(m_Texture);
     }
 
 	void Renderer::RenderText(const std::string& text, int xPos, int yPos, int fontSize, const Color& color) const

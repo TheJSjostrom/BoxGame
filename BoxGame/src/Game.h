@@ -1,4 +1,6 @@
 #pragma once
+#include <array>
+
 #include "src/Camera.h"
 #include "src/Mesh.h"
 #include "src/Level.h"
@@ -12,7 +14,7 @@ namespace BoxGame {
 	public:
 		Game();
 
-		void OnUpdate(float ts);
+		void OnUpdate(const float ts);
 
 		void OnRender();
 		void OnUIRender();
@@ -24,6 +26,7 @@ namespace BoxGame {
 		Camera m_Camera;
 		Level m_Level;
 
+		bool m_CameraMode = true;
 		int m_Timer = 0;
 	};
 

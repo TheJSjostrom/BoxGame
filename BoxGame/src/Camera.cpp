@@ -31,35 +31,39 @@ namespace BoxGame {
 		m_Camera.projection = CAMERA_PERSPECTIVE;
 	}
 
-	void Camera::OnUpdate(float ts)
+	void Camera::OnUpdate(const float ts)
 	{
 		const Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
 		const Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
 
-		Vector2 MousePosition = GetMousePosition();
-		float MousePositionX = MousePosition.x;
-		float MousePositionY = MousePosition.y;
+		Vector2 CurrentMousePosition = GetMousePosition();
+		float CurrentXPosition = CurrentMousePosition.x;
+		float CurrentYPosition = CurrentMousePosition.y;
 
 		if (m_FirstFrame)
 		{
-			m_LastMouseX = MousePositionX;
-			m_LastMouseY = MousePositionY;
+			m_LastXPosition = CurrentXPosition;
+			m_LastYPosition = CurrentYPosition;
 			m_FirstFrame = false;
 		}
 
-		float OffsetX = MousePositionX - m_LastMouseX;
-		m_LastMouseX = MousePositionX;
+		float OffsetX = CurrentXPosition - m_LastXPosition;
+		m_LastXPosition = CurrentXPosition;
 
-		float OffsetY = m_LastMouseY - MousePositionY;
-		m_LastMouseY = MousePositionY;
+		float OffsetY = m_LastYPosition - CurrentYPosition;
+		m_LastYPosition = CurrentYPosition;
 
-		m_Yaw += OffsetX * 0.1f;
-		m_Pitch += OffsetY * 0.1f;
+		m_Yaw += OffsetX * 0.05f;
+		m_Pitch += OffsetY * 0.05f;
 	
 		if (m_Pitch > 89.0f)
+		{
 			m_Pitch = 89.0f;
-		if (m_Pitch < -89.0f)
+		}
+		else if (m_Pitch < -89.0f)
+		{
 			m_Pitch = -89.0f;
+		}
 
 		Vector3 frontDirection;
 		frontDirection.x = cos(radians(m_Yaw)) * cos(radians(m_Pitch));
