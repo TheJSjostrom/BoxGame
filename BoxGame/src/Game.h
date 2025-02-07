@@ -26,8 +26,9 @@ namespace BoxGame {
 		Camera m_Camera;
 		Level m_Level;
 
+		bool m_Play = false;
 		bool m_CameraMode = true;
-		int m_Timer = 0;
+		uint32_t m_Timer = 0;
 	};
 
 }

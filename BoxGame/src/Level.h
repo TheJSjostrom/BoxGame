@@ -8,6 +8,13 @@
 
 namespace BoxGame {
 
+	struct Entity
+	{
+		Vector3 Position = { 0.0f, 0.0f, 0.0f };
+		Vector3 Direction = { 0.0f, 0.0f, 0.0f };
+		float Angle = 0.0f;
+	};
+
 	class Level
 	{
 	public:
@@ -24,13 +31,6 @@ namespace BoxGame {
 		std::unique_ptr<Player> m_Player;
 
 		Vector3 m_CubePosition = { 0.0f, 3.0f, -4.0f };
-		
-		struct Entity
-		{
-			Vector3 Position = { 0.0f, 0.0f, 0.0f };
-			Vector3 Direction = { 0.0f, 0.0f, 0.0f };
-			float Angle = 0.0f;
-		};
 
 		Entity m_Cube;
 

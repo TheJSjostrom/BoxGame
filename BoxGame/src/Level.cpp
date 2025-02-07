@@ -64,15 +64,15 @@ namespace BoxGame {
 		direction.z = sin(radians(m_Cube.Angle));
 		direction = Vector3Normalize(direction);
 
-		if (IsMouseButtonPressed(0) || IsKeyPressed(KEY_I))
+		if (IsMouseButtonDown(0) || IsKeyPressed(KEY_I))
 		{
-			m_Cube.Position.x += direction.x;
-			m_Cube.Position.z += direction.z;
+			m_Cube.Position.x += direction.x * ts;
+			m_Cube.Position.z += direction.z * ts;
 		}
-		else if (IsMouseButtonPressed(1) || IsKeyPressed(KEY_K))
+		else if (IsMouseButtonDown(1) || IsKeyPressed(KEY_K))
 		{
-			m_Cube.Position.x -= direction.x;
-			m_Cube.Position.z -= direction.z;
+			m_Cube.Position.x -= direction.x * ts;
+			m_Cube.Position.z -= direction.z * ts;
 		}
 	
 		m_Cube.Direction.x = direction.x + m_Cube.Position.x;
@@ -88,7 +88,7 @@ namespace BoxGame {
 	{
         const Renderer& renderer = Application::GetRenderer();
 
-		renderer.RenderLine({ m_Cube.Position.x, 0.0f, m_Cube.Position.z }, m_Cube.Direction, BLUE);
+		renderer.RenderLine({ m_Cube.Position.x, 0.0f, m_Cube.Position.z }, m_Cube.Direction, WHITE);
 		renderer.RenderLine({ 0.0f, 0.0f, 0.0f }, m_Cube.Position, GREEN);
 
 		renderer.RenderCube({ m_Cube.Position.x, 0.25f, m_Cube.Position.z }, 0.5f, 0.5f, 0.5f, GOLD);
@@ -109,17 +109,19 @@ namespace BoxGame {
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, 1.0f }), { 0, 0, 255, 255 });
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, -1.0f }), WHITE);
 
-        renderer.RenderTextureCube({ 0.0f, renderer.GetTexture().height / 2.0f,
-                            renderer.GetTexture().width / 2.0f, 
-                            renderer.GetTexture().height / 2.0f },
-                            m_CubePosition, 6.0f, 6.0f, 2.0f, BLUE);
-
-        renderer.RenderTextureCube({ 0.0f, renderer.GetTexture().height / 2.0f,
-                    renderer.GetTexture().width / 2.0f,
-                    renderer.GetTexture().height / 2.0f },
-					{ 4.0f, 3.0f, 0.0f }, 2.0f, 6.0f, 6.0f, BLUE);
-
-		DrawGrid(100, 1.0f);
+        renderer.RenderTextureRec(renderer.GetBricketWallTexture(), {0.0f, renderer.GetBricketWallTexture().height * 2.0f,
+                            renderer.GetBricketWallTexture().width * 2.0f,
+                            renderer.GetBricketWallTexture().height * 2.0f },
+                            m_CubePosition, 6.0f, 6.0f, 2.0f, DARKGRAY);
+	
+        renderer.RenderTextureRec(renderer.GetCheckerBoardTexture(), {0.0f, renderer.GetCheckerBoardTexture().height * 50.0f,
+								   renderer.GetCheckerBoardTexture().width * 50.0f,
+                                   renderer.GetCheckerBoardTexture().height * 50.0f },
+			{ 0.0f, -0.505f, 0.0f }, 100.0f, 1.0f, 100.0f, { 5, 18, 45, 255 });
+		
+		renderer.RenderTextureCube(renderer.GetWoodTexture(), { 1.0f, 0.25f, -2.75f }, 0.5f, 0.5f, 0.5f, GRAY);
+		renderer.RenderTextureCube(renderer.GetWoodTexture(), { 1.0f, 0.25f, 1.0f }, 0.5f, 0.5f, 0.5f, GRAY);
+		//DrawGrid(100, 1.0f);
 	}
 
 }

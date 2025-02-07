@@ -14,6 +14,7 @@ namespace BoxGame {
 		Vector3 m_VectorDir = { 0.0f, 0.0f, 0.0f };
 
 		float m_Dimension = 0.5f;
+		float m_Size = 0.0f;
 	};
 
 }

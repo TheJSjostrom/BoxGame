@@ -9,6 +9,12 @@ namespace BoxGame {
 
 	Cube::Cube(const Vector3& position) : Player(position)
 	{
+		int x = 2;
+	}
+
+	Cube::~Cube()
+	{
+		int x = 2;
 	}
 
 	void Cube::OnUpdate(const float ts)

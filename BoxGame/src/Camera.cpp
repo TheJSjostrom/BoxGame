@@ -31,7 +31,7 @@ namespace BoxGame {
 		m_Camera.projection = CAMERA_PERSPECTIVE;
 	}
 
-	void Camera::OnUpdate(const float ts)
+	void Camera::OnUpdate(float ts)
 	{
 		const Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
 		const Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
@@ -53,8 +53,26 @@ namespace BoxGame {
 		float OffsetY = m_LastYPosition - CurrentYPosition;
 		m_LastYPosition = CurrentYPosition;
 
-		m_Yaw += OffsetX * 0.05f;
-		m_Pitch += OffsetY * 0.05f;
+		if (IsMouseButtonDown(1))
+		{
+			if (m_First)
+			{
+				DisableCursor();
+				m_First = false;
+			}
+			
+			const float sensitivity = 0.05f;
+			m_Yaw += OffsetX * sensitivity;
+			m_Pitch += OffsetY * sensitivity;
+		}
+		else if (!IsMouseButtonDown(1))
+		{
+			if (!m_First)
+			{
+				EnableCursor();
+				m_First = true;
+			}
+		}
 	
 		if (m_Pitch > 89.0f)
 		{

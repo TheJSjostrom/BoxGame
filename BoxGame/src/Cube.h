@@ -8,7 +8,7 @@ namespace BoxGame {
 	{
 	public:
 		Cube(const Vector3& position);
-		~Cube() = default;
+		~Cube();
 
 		virtual void OnUpdate(const float ts) override;
 		virtual void OnRender() override;

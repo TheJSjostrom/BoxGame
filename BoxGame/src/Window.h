@@ -6,8 +6,8 @@ namespace BoxGame {
 	struct WindowData
 	{
 		std::string Title = "BoxGame";
-		unsigned int Width = 1280;
-		unsigned int Height = 720;
+		uint32_t Width = 1280;
+		uint32_t Height = 720;
 		bool VSync = true;
 	};
 
@@ -20,8 +20,8 @@ namespace BoxGame {
 		void OnUpdate();
 		bool IsWindowClosed();
 
-		int GetWidth() const { return m_Data.Width; }
-		int GetHeight() const { return m_Data.Height; }
+		uint32_t GetWidth() const { return m_Data.Width; }
+		uint32_t GetHeight() const { return m_Data.Height; }
 
 		const std::string& GetName() const { return m_Data.Title; }
 		const WindowData& GetWindowData() const { return m_Data; }

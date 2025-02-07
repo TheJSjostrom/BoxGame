@@ -8,7 +8,7 @@ namespace BoxGame {
 	public:
 		Camera();
 
-		void OnUpdate(const float ts);
+		void OnUpdate(float ts);
 
 		const Vector3& GetPosition() const { return m_Camera.position; }
 		const Vector3& GetTarget() const { return m_Camera.target; }
@@ -30,6 +30,8 @@ namespace BoxGame {
 		float m_LastXPosition = 640.0f;
 		float m_LastYPosition = 0.0f;
 		float m_CameraSpeed = 5.0f;
+
+		bool m_First = false;
 	};
 
 }

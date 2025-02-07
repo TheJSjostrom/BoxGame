@@ -46,14 +46,16 @@ namespace BoxGame {
 
 		m_VectorDir.z = m_Velocity.z + m_Position.z;
 		m_VectorDir.x = m_Velocity.x + m_Position.x;
+
+		m_Size = 1.0f + 0.5f * sin(GetTime() * 5);
 	}
 
 	void IceBlock::OnRender()
 	{
 		const Renderer& renderer = Application::GetRenderer();
 		
-		renderer.RenderIceBlock(m_Position, m_Dimension, m_Dimension, m_Dimension);
-		DrawCubeWiresV(m_Position, { m_Dimension, m_Dimension, m_Dimension }, WHITE);
+		renderer.RenderIceBlock(m_Position, m_Size, m_Size, m_Size);
+		DrawCubeWiresV(m_Position, { m_Size, m_Size, m_Size }, WHITE);
 		renderer.RenderLine({ m_Position.x, m_Position.y - 0.25f, m_Position.z }, m_VectorDir, YELLOW);
 	}
 

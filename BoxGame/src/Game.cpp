@@ -16,23 +16,23 @@ namespace BoxGame {
 	{
 		m_Timer++;
 	
-		if (IsKeyPressed(KEY_ONE))
+		if (IsKeyPressed(KEY_P))
 		{
 			DisableCursor();
-			m_CameraMode = true;
+			m_Play = true;
 		}
-		else if (IsKeyPressed(KEY_TWO))
+		else if (IsKeyPressed(KEY_O))
 		{
-			DisableCursor();
-			m_CameraMode = false;
+			EnableCursor();
+			m_Play = false;
 		}
 
-		if (m_CameraMode)
-		{
+		if (m_Play)
+			m_Level.OnUpdate(ts);
+
+		else if (!m_Play)
 			m_Camera.OnUpdate(ts);
-		}
-
-		m_Level.OnUpdate(ts);
+		
 	}
 
 	void Game::OnRender()

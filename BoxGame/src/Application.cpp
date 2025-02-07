@@ -1,7 +1,7 @@
 #include "raylib.h"
 
 #include "src/Application.h"
-#include <iostream>
+
 namespace BoxGame {
 
 	Application* Application::s_Instance = nullptr;
@@ -57,7 +57,7 @@ namespace BoxGame {
 
 	void Application::OnRender()
 	{
-		ClearBackground(BLACK);
+		ClearBackground({ 32,32,32,255});
 
 		BeginDrawing();
 		m_Game.OnRender();
