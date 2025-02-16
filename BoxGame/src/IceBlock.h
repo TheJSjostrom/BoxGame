@@ -15,6 +15,8 @@ namespace BoxGame {
 
 		float m_Dimension = 0.5f;
 		float m_Size = 0.0f;
+		float m_ZPosition = 0.0f;
+		float m_XPosition = 0.0f;
 	};
 
 }

@@ -15,6 +15,25 @@ namespace BoxGame {
 		float Angle = 0.0f;
 	};
 
+	struct Quad
+	{
+		Vector3 VectorA;
+		Vector3 VectorB;
+		Vector3 VectorC;
+		Vector3 VectorD;
+
+		Vector3 RotatedVectorA = { 0.0f, 0.0f, 0.0f };
+		Vector3 RotatedVectorB = { 0.0f, 0.0f, 0.0f };
+		Vector3 RotatedVectorC = { 0.0f, 0.0f, 0.0f };
+		Vector3 RotatedVectorD = { 0.0f, 0.0f, 0.0f };
+
+		Vector3 FrontDirection = { 1.0f, 0.0f, 0.0f };
+		Vector3 Position = { 0.0f, 0.0f, 0.0f };
+
+		Vector3 Start = { 0.0f, 0.0f, 0.0f };
+		float Angle = 0.0f;
+	};
+
 	class Level
 	{
 	public:
@@ -25,6 +44,8 @@ namespace BoxGame {
 		void OnRender();
 
 	private:
+		Quad m_Quad;
+
 		Mesh m_Train;
 		IceBlock m_IceBlock;
 

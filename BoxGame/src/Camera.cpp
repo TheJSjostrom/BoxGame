@@ -57,23 +57,28 @@ namespace BoxGame {
 		{
 			if (m_First)
 			{
-				DisableCursor();
+				OffsetX = 0.0f;
+				OffsetY = 0.0f;
 				m_First = false;
 			}
-			
+
+			if (!IsCursorHidden())
+			{
+				DisableCursor();
+				m_First = true;
+			}
+
 			const float sensitivity = 0.05f;
 			m_Yaw += OffsetX * sensitivity;
 			m_Pitch += OffsetY * sensitivity;
+
 		}
 		else if (!IsMouseButtonDown(1))
 		{
-			if (!m_First)
-			{
+			if (IsCursorHidden())
 				EnableCursor();
-				m_First = true;
-			}
 		}
-	
+
 		if (m_Pitch > 89.0f)
 		{
 			m_Pitch = 89.0f;

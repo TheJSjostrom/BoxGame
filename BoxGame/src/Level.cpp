@@ -20,23 +20,45 @@ namespace BoxGame {
         std::cout << message << std::endl;
     }
 
-    // From degrees to radians.
-    static float radians(float degrees)
-    {
-        return degrees * (PI / 180);
-    }
+	// From degrees to radians.
+	static float radians(float degrees)
+	{
+		return degrees * (PI / 180);
+	}
+
+
+	Vector3 RotationMatrix(const Vector3& vector, float angle)
+	{
+		Vector3 v;
+		v.x = vector.x * cos(radians(angle)) - vector.y * sin(radians(angle));
+		v.y = vector.x * sin(radians(angle)) + vector.y * cos(radians(angle));
+		v.z = 0.0f;
+		return v;
+	}
 
 	Level::Level()
 	{
 		m_Player = std::make_unique<Cube>(Vector3{ 6.0f, 0.25f, 0.0f });
-		m_Train.Init();
+		//m_Train.Init();
+
+		m_Quad.VectorA = { cos(radians(45.0f)), sin(radians(45.0f)), 0.0f };
+		m_Quad.VectorA = Vector3Normalize(m_Quad.VectorA);
+
+		m_Quad.VectorB = { cos(radians(135.0f)), sin(radians(135.0f)), 0.0f };
+		m_Quad.VectorB = Vector3Normalize(m_Quad.VectorB);
+
+		m_Quad.VectorC = { cos(radians(225.0f)), sin(radians(225.0f)), 0.0f };
+		m_Quad.VectorC = Vector3Normalize(m_Quad.VectorC);
+
+		m_Quad.VectorD = { cos(radians(315.0f)), sin(radians(315.0f)), 0.0f };
+		m_Quad.VectorD = Vector3Normalize(m_Quad.VectorD);
 	}
 
 	void Level::OnUpdate(const float ts)
 	{
 		const Vector2 MousePosition = GetMousePosition();
 		const float CurrentXPosition = MousePosition.x;
-	
+
 		if (m_FirstFrame)
 		{
 			m_LastXPosition = CurrentXPosition;
@@ -45,10 +67,10 @@ namespace BoxGame {
 
 		const float OffsetX = CurrentXPosition - m_LastXPosition;
 		m_LastXPosition = CurrentXPosition;
-		
+
 		const float sensitivity = 0.125f;
 		m_Cube.Angle += OffsetX * sensitivity;
-		
+
 		if (IsKeyDown(KEY_L))
 		{
 			m_Cube.Angle += 180.0f * ts;
@@ -74,7 +96,7 @@ namespace BoxGame {
 			m_Cube.Position.x -= direction.x * ts;
 			m_Cube.Position.z -= direction.z * ts;
 		}
-	
+
 		m_Cube.Direction.x = direction.x + m_Cube.Position.x;
 		m_Cube.Direction.y = 0.0f;
 		m_Cube.Direction.z = direction.z + m_Cube.Position.z;
@@ -82,11 +104,76 @@ namespace BoxGame {
 		m_Player->OnUpdate(ts);
 		//m_Train.OnUpdate(ts);
 		m_IceBlock.OnUpdate(ts);
-	}
 
+		if (IsKeyDown(KEY_X))
+		{
+			m_Quad.Angle += 180.0f * ts;
+		}
+		else if (IsKeyDown(KEY_C))
+		{
+			m_Quad.Angle -= 180.0f * ts;
+		}
+
+		m_Quad.FrontDirection.x = cos(radians(m_Quad.Angle));
+		m_Quad.FrontDirection.y = sin(radians(m_Quad.Angle));
+		m_Quad.FrontDirection.z = 0.0f;
+	
+		const float speed = 5.0f;
+
+		if (IsKeyDown(KEY_T))
+		{
+			m_Quad.Position.x += m_Quad.FrontDirection.x * ts;
+			m_Quad.Position.y += m_Quad.FrontDirection.y * ts;
+			m_Quad.Position.z += 0.0f;
+
+			m_Quad.Start.x += m_Quad.FrontDirection.x * ts;
+			m_Quad.Start.y += m_Quad.FrontDirection.y * ts;
+			m_Quad.Start.z += m_Quad.FrontDirection.z * ts;
+		}
+		if (IsKeyDown(KEY_F))
+		{
+			m_Quad.Position.x -= m_Quad.FrontDirection.x * ts;
+			m_Quad.Position.y -= m_Quad.FrontDirection.y * ts;
+			m_Quad.Position.z -= 0.0f;
+
+			m_Quad.Start.x -= m_Quad.FrontDirection.x * ts;
+			m_Quad.Start.y -= m_Quad.FrontDirection.y * ts;
+			m_Quad.Start.z -= m_Quad.FrontDirection.z * ts;
+		}
+
+		m_Quad.RotatedVectorA.x = m_Quad.VectorA.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorA.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
+		m_Quad.RotatedVectorA.y = m_Quad.VectorA.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorA.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorA.z = 0.0f;
+		
+		m_Quad.RotatedVectorB.x = m_Quad.VectorB.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorB.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
+		m_Quad.RotatedVectorB.y = m_Quad.VectorB.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorB.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorB.z = 0.0f;
+		 
+		m_Quad.RotatedVectorC.x = m_Quad.VectorC.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorC.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
+		m_Quad.RotatedVectorC.y = m_Quad.VectorC.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorC.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorC.z = 0.0f;
+	
+		m_Quad.RotatedVectorD.x = m_Quad.VectorD.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorD.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
+		m_Quad.RotatedVectorD.y = m_Quad.VectorD.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorD.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorD.z = 0.0f;
+		
+	}
+	
 	void Level::OnRender()
 	{
         const Renderer& renderer = Application::GetRenderer();
+		
+		renderer.RenderLine(m_Quad.Start, { m_Quad.FrontDirection.x + m_Quad.Position.x, m_Quad.FrontDirection.y + m_Quad.Position.y, 0.0f }, PURPLE);
+
+		renderer.RenderLine(m_Quad.Start, m_Quad.RotatedVectorA, PURPLE);
+		renderer.RenderLine(m_Quad.Start, m_Quad.RotatedVectorB, PURPLE);
+		renderer.RenderLine(m_Quad.Start, m_Quad.RotatedVectorC, PURPLE);
+		renderer.RenderLine(m_Quad.Start, m_Quad.RotatedVectorD, PURPLE);
+
+		renderer.RenderLine(m_Quad.RotatedVectorA, m_Quad.RotatedVectorB, PURPLE);
+		renderer.RenderLine(m_Quad.RotatedVectorB, m_Quad.RotatedVectorC, PURPLE);
+		renderer.RenderLine(m_Quad.RotatedVectorC, m_Quad.RotatedVectorD, PURPLE);
+		renderer.RenderLine(m_Quad.RotatedVectorD, m_Quad.RotatedVectorA, PURPLE);
 
 		renderer.RenderLine({ m_Cube.Position.x, 0.0f, m_Cube.Position.z }, m_Cube.Direction, WHITE);
 		renderer.RenderLine({ 0.0f, 0.0f, 0.0f }, m_Cube.Position, GREEN);
