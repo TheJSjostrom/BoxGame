@@ -32,6 +32,7 @@ namespace BoxGame {
 
 		Vector3 Start = { 0.0f, 0.0f, 0.0f };
 		float Angle = 0.0f;
+		float Scale = 1.0f;
 	};
 
 	class Level
@@ -42,6 +43,8 @@ namespace BoxGame {
 
 		void OnUpdate(const float ts);
 		void OnRender();
+
+		const Vector3& GetCubePosition() const { return m_CubePosition; };
 
 	private:
 		Quad m_Quad;

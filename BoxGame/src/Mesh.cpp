@@ -18,7 +18,6 @@ namespace BoxGame {
 
 	void Mesh::OnUpdate(const float ts)
 	{
-		
 	}
 
 	void Mesh::OnRender()

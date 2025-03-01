@@ -45,7 +45,7 @@ namespace BoxGame {
 			
 			OnUpdate(timestep);
 			OnRender();
-			m_Window.OnUpdate();
+			//m_Window.OnUpdate();
 		}
 		 
 	}

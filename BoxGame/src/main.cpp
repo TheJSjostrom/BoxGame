@@ -7,6 +7,6 @@ static void RunApp()
 }
 
 int main()
-{	
+{
 	RunApp();
 }

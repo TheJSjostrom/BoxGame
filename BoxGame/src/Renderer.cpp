@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "raylib.h"
 #include "rlgl.h"
 
@@ -20,11 +22,40 @@ namespace BoxGame {
         m_Texture = LoadTexture("./res/Wooden.png");
         m_Texture2 = LoadTexture("./res/Checkerboard.png");
         m_Texture3 = LoadTexture("./res/bricketwall.png");
+
+        m_PauseButton = LoadTexture("./res/PauseButton.png");
+        m_PlayButton = LoadTexture("./res/PlayButton.png");
+
+        if (!IsTextureReady(m_Texture))
+        {
+            std::cout << "The m_Texture texture couldn't initialize successfully" << std::endl;
+        } 
+        else if (!IsTextureReady(m_Texture2))
+        {
+            std::cout << "The m_Texture2 texture couldn't initialize successfully" << std::endl;
+        }
+        else if (!IsTextureReady(m_Texture3))
+        {
+            std::cout << "The m_Texture3 texture couldn't initialize successfully" << std::endl;
+        }
+        else if (!IsTextureReady(m_PauseButton))
+        {
+            std::cout << "The m_PauseButton texture couldn't initialize successfully" << std::endl;
+        }
+        else if (!IsTextureReady(m_PlayButton))
+        {
+            std::cout << "The m_PlayButton texture couldn't initialize successfully" << std::endl;
+        }
     }
 
     void Renderer::Shutdown()
     {
         UnloadTexture(m_Texture);
+        UnloadTexture(m_Texture2);
+        UnloadTexture(m_Texture3);
+
+        UnloadTexture(m_PauseButton);
+        UnloadTexture(m_PlayButton);
     }
 
     void Renderer::RenderText(const std::string& text, uint32_t xPos, uint32_t yPos, uint32_t fontSize, const Color& color) const
@@ -55,6 +86,11 @@ namespace BoxGame {
     void Renderer::RenderRay(const Vector3& position, const Vector3& direction, const Color& color) const
     {
         DrawRay({ position, direction }, color);
+    }
+
+    void Renderer::RenderTexture(const Texture2D& texture, uint32_t XPos, uint32_t YPos, const Color& color) const
+    {
+        DrawTexture(texture, XPos, YPos, color);
     }
 
     void Renderer::RenderTextureCube(const Texture2D& texture, const Vector3& position, float width, float height, float length, const Color& color) const

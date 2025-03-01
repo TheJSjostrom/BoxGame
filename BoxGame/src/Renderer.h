@@ -18,6 +18,9 @@ namespace BoxGame {
 		const Texture2D& GetCheckerBoardTexture() const { return m_Texture2; }
 		const Texture2D& GetBricketWallTexture() const { return m_Texture3; }
 
+		const Texture2D& GetPauseButtonTexture() const { return m_PauseButton; }
+		const Texture2D& GetPlayButtonTexture() const { return m_PlayButton; }
+
 		void RenderIceBlock(const Vector3& position, float width, float height, float length, const Color& color = SKYBLUE) const;
 
 		void RenderTextureCube(const Texture2D& texture, const Vector3& position, float width, float height, float length, const Color& color) const;
@@ -27,11 +30,15 @@ namespace BoxGame {
 		void RenderRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, const Color& color) const;
 		void RenderRay(const Vector3& position, const Vector3& direction, const Color& color) const;
 		void RenderLine(const Vector3& startPos, const Vector3& endPos, const Color& color) const;
+		void RenderTexture(const Texture2D& texture, uint32_t XPos, uint32_t YPos, const Color& color) const;
 		
 	private:
 		Texture2D m_Texture;
 		Texture2D m_Texture2;
 		Texture2D m_Texture3;
+
+		Texture2D m_PauseButton;
+		Texture2D m_PlayButton;
 	};
 
 }

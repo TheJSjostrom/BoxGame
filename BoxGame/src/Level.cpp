@@ -39,7 +39,7 @@ namespace BoxGame {
 	Level::Level()
 	{
 		m_Player = std::make_unique<Cube>(Vector3{ 6.0f, 0.25f, 0.0f });
-		//m_Train.Init();
+		m_Train.Init();
 
 		m_Quad.VectorA = { cos(radians(45.0f)), sin(radians(45.0f)), 0.0f };
 		m_Quad.VectorA = Vector3Normalize(m_Quad.VectorA);
@@ -102,7 +102,7 @@ namespace BoxGame {
 		m_Cube.Direction.z = direction.z + m_Cube.Position.z;
 
 		m_Player->OnUpdate(ts);
-		//m_Train.OnUpdate(ts);
+		m_Train.OnUpdate(ts);
 		m_IceBlock.OnUpdate(ts);
 
 		if (IsKeyDown(KEY_X))
@@ -114,56 +114,64 @@ namespace BoxGame {
 			m_Quad.Angle -= 180.0f * ts;
 		}
 
-		m_Quad.FrontDirection.x = cos(radians(m_Quad.Angle));
-		m_Quad.FrontDirection.y = sin(radians(m_Quad.Angle));
+		if (IsKeyDown(KEY_K))
+		{
+			m_Quad.Scale += 1.0f * ts;
+		}
+		else if (IsKeyDown(KEY_L))
+		{
+			m_Quad.Scale -= 1.0f * ts;
+		}
+
+		m_Quad.FrontDirection.x = cos(radians(m_Quad.Angle)) * 0.25f;
+		m_Quad.FrontDirection.y = sin(radians(m_Quad.Angle)) * 0.25f;
 		m_Quad.FrontDirection.z = 0.0f;
 	
-		const float speed = 5.0f;
+		const float speed = 7.0f;
 
-		if (IsKeyDown(KEY_T))
+		if (IsKeyDown(KEY_V))
 		{
-			m_Quad.Position.x += m_Quad.FrontDirection.x * ts;
-			m_Quad.Position.y += m_Quad.FrontDirection.y * ts;
-			m_Quad.Position.z += 0.0f;
+			m_Quad.Position.x += m_Quad.FrontDirection.x * speed * ts;
+			m_Quad.Position.y += m_Quad.FrontDirection.y * speed * ts;
+			m_Quad.Position.z += m_Quad.FrontDirection.z * speed * ts;
 
-			m_Quad.Start.x += m_Quad.FrontDirection.x * ts;
-			m_Quad.Start.y += m_Quad.FrontDirection.y * ts;
-			m_Quad.Start.z += m_Quad.FrontDirection.z * ts;
+			m_Quad.Start.x += m_Quad.FrontDirection.x * speed * ts;
+			m_Quad.Start.y += m_Quad.FrontDirection.y * speed * ts;
+			m_Quad.Start.z += m_Quad.FrontDirection.z * speed * ts;
 		}
-		if (IsKeyDown(KEY_F))
+		if (IsKeyDown(KEY_B))
 		{
-			m_Quad.Position.x -= m_Quad.FrontDirection.x * ts;
-			m_Quad.Position.y -= m_Quad.FrontDirection.y * ts;
-			m_Quad.Position.z -= 0.0f;
+			m_Quad.Position.x -= m_Quad.FrontDirection.x * speed * ts;
+			m_Quad.Position.y -= m_Quad.FrontDirection.y * speed * ts;
+			m_Quad.Position.z -= m_Quad.FrontDirection.z * speed * ts;
 
-			m_Quad.Start.x -= m_Quad.FrontDirection.x * ts;
-			m_Quad.Start.y -= m_Quad.FrontDirection.y * ts;
-			m_Quad.Start.z -= m_Quad.FrontDirection.z * ts;
+			m_Quad.Start.x -= m_Quad.FrontDirection.x * speed * ts;
+			m_Quad.Start.y -= m_Quad.FrontDirection.y * speed * ts;
+			m_Quad.Start.z -= m_Quad.FrontDirection.z * speed * ts;
 		}
 
-		m_Quad.RotatedVectorA.x = m_Quad.VectorA.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorA.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
-		m_Quad.RotatedVectorA.y = m_Quad.VectorA.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorA.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorA.x = ((m_Quad.VectorA.x * m_Quad.Scale) * cos(radians(m_Quad.Angle)) - (m_Quad.VectorA.y * m_Quad.Scale) * sin(radians(m_Quad.Angle))) + m_Quad.Position.x;
+		m_Quad.RotatedVectorA.y = ((m_Quad.VectorA.x * m_Quad.Scale) * sin(radians(m_Quad.Angle)) + (m_Quad.VectorA.y * m_Quad.Scale) * cos(radians(m_Quad.Angle))) + m_Quad.Position.y;
 		m_Quad.RotatedVectorA.z = 0.0f;
 		
-		m_Quad.RotatedVectorB.x = m_Quad.VectorB.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorB.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
-		m_Quad.RotatedVectorB.y = m_Quad.VectorB.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorB.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorB.x = ((m_Quad.VectorB.x * m_Quad.Scale) * cos(radians(m_Quad.Angle)) - (m_Quad.VectorB.y * m_Quad.Scale) * sin(radians(m_Quad.Angle))) + m_Quad.Position.x;
+		m_Quad.RotatedVectorB.y = ((m_Quad.VectorB.x * m_Quad.Scale) * sin(radians(m_Quad.Angle)) + (m_Quad.VectorB.y * m_Quad.Scale) * cos(radians(m_Quad.Angle))) + m_Quad.Position.y;
 		m_Quad.RotatedVectorB.z = 0.0f;
 		 
-		m_Quad.RotatedVectorC.x = m_Quad.VectorC.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorC.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
-		m_Quad.RotatedVectorC.y = m_Quad.VectorC.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorC.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorC.x = ((m_Quad.VectorC.x * m_Quad.Scale) * cos(radians(m_Quad.Angle)) - (m_Quad.VectorC.y * m_Quad.Scale) * sin(radians(m_Quad.Angle))) + m_Quad.Position.x;
+		m_Quad.RotatedVectorC.y = ((m_Quad.VectorC.x * m_Quad.Scale) * sin(radians(m_Quad.Angle)) + (m_Quad.VectorC.y * m_Quad.Scale) * cos(radians(m_Quad.Angle))) + m_Quad.Position.y;
 		m_Quad.RotatedVectorC.z = 0.0f;
 	
-		m_Quad.RotatedVectorD.x = m_Quad.VectorD.x * cos(radians(m_Quad.Angle)) - m_Quad.VectorD.y * sin(radians(m_Quad.Angle)) + m_Quad.Position.x;
-		m_Quad.RotatedVectorD.y = m_Quad.VectorD.x * sin(radians(m_Quad.Angle)) + m_Quad.VectorD.y * cos(radians(m_Quad.Angle)) + m_Quad.Position.y;
+		m_Quad.RotatedVectorD.x = ((m_Quad.VectorD.x * m_Quad.Scale) * cos(radians(m_Quad.Angle)) - (m_Quad.VectorD.y * m_Quad.Scale) * sin(radians(m_Quad.Angle))) + m_Quad.Position.x;
+		m_Quad.RotatedVectorD.y = ((m_Quad.VectorD.x * m_Quad.Scale) * sin(radians(m_Quad.Angle)) + (m_Quad.VectorD.y * m_Quad.Scale) * cos(radians(m_Quad.Angle))) + m_Quad.Position.y;
 		m_Quad.RotatedVectorD.z = 0.0f;
-		
 	}
 	
 	void Level::OnRender()
 	{
         const Renderer& renderer = Application::GetRenderer();
 		
-		renderer.RenderLine(m_Quad.Start, { m_Quad.FrontDirection.x + m_Quad.Position.x, m_Quad.FrontDirection.y + m_Quad.Position.y, 0.0f }, PURPLE);
+		renderer.RenderLine(m_Quad.Start, { (m_Quad.FrontDirection.x + m_Quad.Position.x), (m_Quad.FrontDirection.y + m_Quad.Position.y), 0.0f }, PURPLE);
 
 		renderer.RenderLine(m_Quad.Start, m_Quad.RotatedVectorA, PURPLE);
 		renderer.RenderLine(m_Quad.Start, m_Quad.RotatedVectorB, PURPLE);
@@ -195,6 +203,7 @@ namespace BoxGame {
 		// Z line
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, 1.0f }), { 0, 0, 255, 255 });
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, -1.0f }), WHITE);
+
 
         renderer.RenderTextureRec(renderer.GetBricketWallTexture(), {0.0f, renderer.GetBricketWallTexture().height * 2.0f,
                             renderer.GetBricketWallTexture().width * 2.0f,
