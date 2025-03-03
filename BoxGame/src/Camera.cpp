@@ -36,37 +36,27 @@ namespace BoxGame {
 		const Vector3 UpDirection = { 0.0f, 1.0f, 0.0f };
 		const Vector3 LeftDirection = Vector3Normalize(Vector3CrossProduct(UpDirection, m_FrontDirection));
 
-		Vector2 CurrentMousePosition = GetMousePosition();
-		float CurrentXPosition = CurrentMousePosition.x;
-		float CurrentYPosition = CurrentMousePosition.y;
-
-		if (m_FirstFrame)
-		{
-			m_LastXPosition = CurrentXPosition;
-			m_LastYPosition = CurrentYPosition;
-			m_FirstFrame = false;
-		}
-
-		float OffsetX = CurrentXPosition - m_LastXPosition;
-		m_LastXPosition = CurrentXPosition;
-
-		float OffsetY = m_LastYPosition - CurrentYPosition;
-		m_LastYPosition = CurrentYPosition;
-
 		if (IsMouseButtonDown(1))
 		{
-			if (m_First)
+			if (!IsCursorHidden())
+				DisableCursor();
+				
+			Vector2 CurrentMousePosition = GetMousePosition();
+			float CurrentXPosition = CurrentMousePosition.x;
+			float CurrentYPosition = CurrentMousePosition.y;
+
+			if (m_FirstFrame)
 			{
-				OffsetX = 0.0f;
-				OffsetY = 0.0f;
-				m_First = false;
+				m_LastXPosition = CurrentXPosition;
+				m_LastYPosition = CurrentYPosition;
+				m_FirstFrame = false;
 			}
 
-			if (!IsCursorHidden())
-			{
-				DisableCursor();
-				m_First = true;
-			}
+			float OffsetX = CurrentXPosition - m_LastXPosition;
+			m_LastXPosition = CurrentXPosition;
+
+			float OffsetY = m_LastYPosition - CurrentYPosition;
+			m_LastYPosition = CurrentYPosition;
 
 			const float sensitivity = 0.05f;
 			m_Yaw += OffsetX * sensitivity;
@@ -76,7 +66,10 @@ namespace BoxGame {
 		else if (!IsMouseButtonDown(1))
 		{
 			if (IsCursorHidden())
+			{
 				EnableCursor();
+				m_FirstFrame = true;
+			}
 		}
 
 		if (m_Pitch > 89.0f)

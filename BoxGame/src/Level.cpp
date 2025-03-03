@@ -192,6 +192,10 @@ namespace BoxGame {
 		//m_Train.OnRender();
 		m_IceBlock.OnRender();
 
+		// ########################################################################################################
+		// ########################## Render Coordinate System ####################################################
+		// ########################################################################################################
+		
 		// X line
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 1.0f, 0.0f, 0.0f }), { 255, 0, 0, 255 });
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ -1.0f, 0.0f, 0.0f }), WHITE);
@@ -204,6 +208,9 @@ namespace BoxGame {
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, 1.0f }), { 0, 0, 255, 255 });
 		renderer.RenderRay({ 0.0f, 0.0f, 0.0f }, Vector3Normalize({ 0.0f, 0.0f, -1.0f }), WHITE);
 
+		// ########################################################################################################
+		// ########################################################################################################
+		// ########################################################################################################
 
         renderer.RenderTextureRec(renderer.GetBricketWallTexture(), {0.0f, renderer.GetBricketWallTexture().height * 2.0f,
                             renderer.GetBricketWallTexture().width * 2.0f,

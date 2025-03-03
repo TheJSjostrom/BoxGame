@@ -27,7 +27,7 @@ namespace BoxGame {
 		bool m_FirstFrame = true;
 		float m_Yaw = -45.0f;
 		float m_Pitch = 0.0f;
-		float m_LastXPosition = 640.0f;
+		float m_LastXPosition = 0.0f;
 		float m_LastYPosition = 0.0f;
 		float m_CameraSpeed = 5.0f;
 
